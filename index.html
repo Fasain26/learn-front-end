@@ -1,35 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Holy Grail Layout</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, sans-serif;
+    }
+
+    /* Outer wrapper: column flex so header/footer stack top and bottom */
+    .wrapper {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #1a1a2e;
+      color: white;
+      padding: 18px 24px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    /* Middle row: sidebar + main side by side */
+    .body-row {
+      display: flex;
+      flex: 1; /* takes all vertical space between header and footer */
+    }
+
+    .sidebar {
+      width: 250px;
+      flex-shrink: 0;  /* NEVER shrink below 250px */
+      background: #2d2d5e;
+      color: #ccc;
+      padding: 24px 20px;
+    }
+
+    .sidebar ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .sidebar a {
+      color: #ccc;
+      text-decoration: none;
+    }
+
+    main {
+      flex: 1; /* takes all remaining space */
+      padding: 28px 32px;
+      background: #f9f9f9;
+    }
+
+    footer {
+      background: #1a1a2e;
+      color: #aaa;
+      padding: 14px 24px;
+      font-size: 13px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="#about">About</a>
-            <a href="#skills">Skills</a>
-            <a href="#contact">Contact</a>
-        </nav>
-    </header>
 
-    <main>
-        <section id="about">
-            <h1>Hi, I'm Fabiano</h1>
-        </section>
-        
-        <section id="skills">
-            <h2>This is my skills</h2>
-        </section>
+  <div class="wrapper">
 
-        <section id="contact">
-            <h2>Get in touch with me..</h2>
-        </section>
-    </main>
+    <header>MyWebsite</header>
 
-    <footer>
-        <p>Built by Fasain - 2026</p>
-    </footer>
+    <div class="body-row">
+      <aside class="sidebar">
+        <p>Navigation</p>
+        <ul>
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="#">Projects</a></li>
+          <li><a href="#">Settings</a></li>
+          <li><a href="#">Profile</a></li>
+        </ul>
+      </aside>
+
+      <main>
+        <h2>Main content area</h2>
+        <p>The sidebar is fixed at 250px. This area takes all remaining space.</p>
+      </main>
+    </div>
+
+    <footer>Built by Fasain — 2026</footer>
+
+  </div>
+
 </body>
 </html>
