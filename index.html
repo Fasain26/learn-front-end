@@ -3,251 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gallery</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    /* ── CSS CUSTOM PROPERTIES ── */
-    :root {
-      --primary: #1a1a2e;
-      --accent: #4f8ef7;
-      --bg: #f9f9f9;
-      --text: #333;
-      --muted: #888;
-      --radius: 10px;
-      --shadow: 0 2px 12px rgba(0,0,0,0.08);
-      --gap: 20px;
-    }
-
-    body {
-      font-family: system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    /* ── NAVBAR (Flexbox) ── */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 32px;
-      background: var(--primary);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .logo {
-      color: white;
-      font-size: 18px;
-      font-weight: 600;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 24px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: #ccc;
-      text-decoration: none;
-      font-size: 14px;
-      transition: color 0.2s;
-    }
-
-    .nav-links a:hover {
-      color: white;
-    }
-
-    /* ── HERO (Flexbox) ── */
-    .hero {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 64px 24px;
-      background: linear-gradient(135deg, var(--primary), #2d2d5e);
-      color: white;
-      gap: 16px;
-    }
-
-    .hero h1 {
-      font-size: 36px;
-      font-weight: 700;
-      line-height: 1.2;
-    }
-
-    .hero p {
-      font-size: 16px;
-      color: #ccc;
-      max-width: 500px;
-    }
-
-    .hero-btn {
-      padding: 12px 28px;
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: var(--radius);
-      font-size: 15px;
-      cursor: pointer;
-      font-weight: 500;
-    }
-
-    /* ── SECTIONS ── */
-    .section {
-      padding: 48px 32px;
-    }
-
-    .section-title {
-      font-size: 22px;
-      font-weight: 600;
-      margin-bottom: 24px;
-      color: var(--primary);
-    }
-
-    /* ── GALLERY (Grid — auto-fit) ── */
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 12px;
-    }
-
-    .gallery img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;      /* fill cell without distorting */
-      border-radius: var(--radius);
-      display: block;
-      transition: transform 0.2s;
-    }
-
-    .gallery img:hover {
-      transform: scale(1.02);
-    }
-
-    /* ── FEATURES (Grid — responsive) ── */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: var(--gap);
-    }
-
-    .feature-card {
-      background: white;
-      border-radius: var(--radius);
-      padding: 24px;
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .feature-icon {
-      font-size: 28px;
-    }
-
-    .feature-card h3 {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--primary);
-    }
-
-    .feature-card p {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.6;
-      flex-grow: 1;   /* pushes tag to bottom */
-    }
-
-    .feature-tag {
-      display: inline-block;
-      padding: 3px 10px;
-      background: #eef2ff;
-      color: var(--accent);
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 500;
-      width: fit-content;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--primary);
-      color: #aaa;
-      padding: 24px 32px;
-      text-align: center;
-      font-size: 13px;
-    }
-
-    footer span {
-      color: var(--accent);
-    }
-  </style>
+  <title>Day 04 — ES6+ Utility Library</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <nav class="navbar">
-    <span class="logo">GalleryApp</span>
-    <ul class="nav-links">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Gallery</a></li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-  </nav>
+  <div class="container">
+    <header class="page-header">
+      <h1>Day 04 — ES6+ Utility Library</h1>
+      <p>All functions tested and rendered to the DOM</p>
+    </header>
 
-  <section class="hero">
-    <h1>Beautiful Photography</h1>
-    <p>A responsive gallery built with CSS Grid and Flexbox.</p>
-    <button class="hero-btn">Explore Gallery</button>
-  </section>
+    <!-- Each section corresponds to one utility function -->
+    <section class="card" id="section-sum">
+      <h2>sum()</h2>
+      <p class="description">Takes an array of numbers, returns the total.</p>
+      <div class="output" id="output-sum"></div>
+    </section>
 
-  <section class="section">
-    <h2 class="section-title">Photo Gallery</h2>
-    <div class="gallery">
-      <img src="https://picsum.photos/seed/11/400/300" alt="Photo 1">
-      <img src="https://picsum.photos/seed/22/400/300" alt="Photo 2">
-      <img src="https://picsum.photos/seed/33/400/300" alt="Photo 3">
-      <img src="https://picsum.photos/seed/44/400/300" alt="Photo 4">
-      <img src="https://picsum.photos/seed/55/400/300" alt="Photo 5">
-      <img src="https://picsum.photos/seed/66/400/300" alt="Photo 6">
-    </div>
-  </section>
+    <section class="card" id="section-totalPrice">
+      <h2>totalPrice()</h2>
+      <p class="description">Takes an array of items with a price property, returns total cost.</p>
+      <div class="output" id="output-totalPrice"></div>
+    </section>
 
-  <section class="section" style="background: white;">
-    <h2 class="section-title">Why Grid?</h2>
-    <div class="features-grid">
-      <div class="feature-card">
-        <span class="feature-icon">🧩</span>
-        <h3>Two-dimensional</h3>
-        <p>Control rows and columns at the same time. Flexbox handles one direction — Grid handles both.</p>
-        <span class="feature-tag">Layout</span>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">📱</span>
-        <h3>Responsive by default</h3>
-        <p>Use auto-fit with minmax and your grid adapts to any screen width with zero media queries.</p>
-        <span class="feature-tag">Responsive</span>
-      </div>
-      <div class="feature-card">
-        <span class="feature-icon">🎯</span>
-        <h3>Precise placement</h3>
-        <p>Place items anywhere using grid lines, named areas, or span values.</p>
-        <span class="feature-tag">Control</span>
-      </div>
-    </div>
-  </section>
+    <section class="card" id="section-groupBy">
+      <h2>groupBy()</h2>
+      <p class="description">Groups an array of objects by a given key.</p>
+      <div class="output" id="output-groupBy"></div>
+    </section>
 
-  <footer>
-    <p>Built by <span>Fasain</span> — Day 3 of 14 · 2026</p>
-  </footer>
+    <section class="card" id="section-toTitleCase">
+      <h2>toTitleCase()</h2>
+      <p class="description">Converts a string to Title Case.</p>
+      <div class="output" id="output-toTitleCase"></div>
+    </section>
 
+    <section class="card" id="section-unique">
+      <h2>unique()</h2>
+      <p class="description">Removes duplicate values from an array.</p>
+      <div class="output" id="output-unique"></div>
+    </section>
+
+    <section class="card" id="section-pick">
+      <h2>pick()</h2>
+      <p class="description">Returns a new object with only the specified keys.</p>
+      <div class="output" id="output-pick"></div>
+    </section>
+
+    <section class="card" id="section-progress">
+      <h2>progressPercent()</h2>
+      <p class="description">Returns a percentage string from a value and max.</p>
+      <div class="output" id="output-progress"></div>
+    </section>
+
+    <section class="card" id="section-nested">
+      <h2>getNestedValue()</h2>
+      <p class="description">Safely gets a nested value using a dot-string path.</p>
+      <div class="output" id="output-nested"></div>
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

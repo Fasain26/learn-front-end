@@ -1,0 +1,119 @@
+/* ── RESET & VARIABLES ── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary:   #1a1a2e;
+  --accent:    #4f8ef7;
+  --bg:        #f0f2f5;
+  --surface:   #ffffff;
+  --text:      #1a1a2e;
+  --muted:     #888;
+  --success:   #22c55e;
+  --radius:    10px;
+  --shadow:    0 2px 12px rgba(0, 0, 0, 0.07);
+  --gap:       20px;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ── LAYOUT ── */
+.container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+}
+
+/* ── HEADER ── */
+.page-header {
+  text-align: center;
+  padding: 32px;
+  background: var(--primary);
+  border-radius: var(--radius);
+  color: white;
+}
+
+.page-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.page-header p {
+  font-size: 14px;
+  color: #aaa;
+}
+
+/* ── CARDS ── */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  border: 1px solid #e5e7eb;
+}
+
+.card h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent);
+  font-family: 'Courier New', monospace;
+  margin-bottom: 4px;
+}
+
+.card .description {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+/* ── OUTPUT ROWS ── */
+.output {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.result-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border-radius: 7px;
+  border: 1px solid #e5e7eb;
+  font-size: 13px;
+}
+
+.result-row .label {
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-top: 1px;
+}
+
+.result-row .value {
+  font-family: 'Courier New', monospace;
+  color: var(--text);
+  font-weight: 500;
+  word-break: break-all;
+}
+
+.result-row .value.highlight {
+  color: var(--accent);
+}
+
+.result-row .value.success {
+  color: var(--success);
+}
