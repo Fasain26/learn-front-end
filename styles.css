@@ -6,114 +6,245 @@
 }
 
 :root {
-  --primary:   #1a1a2e;
-  --accent:    #4f8ef7;
-  --bg:        #f0f2f5;
-  --surface:   #ffffff;
-  --text:      #1a1a2e;
-  --muted:     #888;
-  --success:   #22c55e;
-  --radius:    10px;
-  --shadow:    0 2px 12px rgba(0, 0, 0, 0.07);
-  --gap:       20px;
+  --primary:     #1a1a2e;
+  --accent:      #4f8ef7;
+  --danger:      #ef4444;
+  --success:     #22c55e;
+  --bg:          #f0f2f5;
+  --surface:     #ffffff;
+  --text:        #1a1a2e;
+  --muted:       #9ca3af;
+  --border:      #e5e7eb;
+  --radius:      10px;
+  --shadow:      0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 body {
   font-family: system-ui, sans-serif;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 48px 16px;
 }
 
-/* ── LAYOUT ── */
-.container {
-  max-width: 860px;
-  margin: 0 auto;
-  padding: 40px 24px;
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap);
+/* ── APP WRAPPER ── */
+.app {
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 520px;
+  overflow: hidden;
 }
 
 /* ── HEADER ── */
-.page-header {
-  text-align: center;
-  padding: 32px;
+.app-header {
   background: var(--primary);
+  padding: 28px 28px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-header h1 {
+  color: white;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.counter {
+  font-size: 13px;
+  color: #aaa;
+  background: rgba(255,255,255,0.08);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* ── INPUT ROW ── */
+.input-row {
+  display: flex;
+  gap: 10px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.input-row input {
+  flex: 1;
+  padding: 11px 16px;
+  border: 1.5px solid var(--border);
   border-radius: var(--radius);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-row input:focus {
+  border-color: var(--accent);
+}
+
+.input-row button {
+  padding: 11px 22px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.2s;
+}
+
+.input-row button:hover {
+  background: #3a7de6;
+}
+
+/* ── FILTERS ── */
+.filters {
+  display: flex;
+  gap: 6px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.filter-btn {
+  padding: 6px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  background: transparent;
+  font-size: 13px;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+.filter-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Active filter — JS adds/removes this class */
+.filter-btn.active {
+  background: var(--accent);
+  border-color: var(--accent);
   color: white;
 }
 
-.page-header h1 {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 6px;
+/* ── TODO LIST ── */
+.todo-list {
+  list-style: none;
+  padding: 8px 0;
+  min-height: 60px;
 }
 
-.page-header p {
-  font-size: 14px;
-  color: #aaa;
-}
-
-/* ── CARDS ── */
-.card {
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 24px;
-  box-shadow: var(--shadow);
-  border: 1px solid #e5e7eb;
-}
-
-.card h2 {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--accent);
-  font-family: 'Courier New', monospace;
-  margin-bottom: 4px;
-}
-
-.card .description {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 16px;
-}
-
-/* ── OUTPUT ROWS ── */
-.output {
+/* Each todo item */
+.todo-item {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.result-row {
-  display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
-  padding: 10px 14px;
-  background: #f8fafc;
-  border-radius: 7px;
-  border: 1px solid #e5e7eb;
-  font-size: 13px;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
 }
 
-.result-row .label {
-  color: var(--muted);
-  white-space: nowrap;
+.todo-item:last-child {
+  border-bottom: none;
+}
+
+.todo-item:hover {
+  background: #fafafa;
+}
+
+/* Complete button — the circle checkbox */
+.complete-btn {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: transparent;
+  cursor: pointer;
   flex-shrink: 0;
-  padding-top: 1px;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: white;
 }
 
-.result-row .value {
-  font-family: 'Courier New', monospace;
+.complete-btn:hover {
+  border-color: var(--success);
+}
+
+/* When todo is completed — JS adds .completed to the <li> */
+.todo-item.completed .complete-btn {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.todo-item.completed .complete-btn::after {
+  content: "✓";
+}
+
+/* Todo text */
+.todo-text {
+  flex: 1;
+  font-size: 14px;
   color: var(--text);
-  font-weight: 500;
-  word-break: break-all;
+  line-height: 1.5;
+  transition: all 0.15s;
 }
 
-.result-row .value.highlight {
-  color: var(--accent);
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
+  color: var(--muted);
 }
 
-.result-row .value.success {
-  color: var(--success);
+/* Delete button */
+.delete-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;                /* hidden by default */
+  transition: all 0.15s;
+}
+
+/* Show delete button on row hover */
+.todo-item:hover .delete-btn {
+  opacity: 1;
+}
+
+.delete-btn:hover {
+  background: #fef2f2;
+  color: var(--danger);
+}
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  padding: 40px 24px;
+  text-align: center;
+  display: none;           /* hidden by default — JS shows it when list is empty */
+}
+
+.empty-state p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* JS adds this class to show it */
+.empty-state.visible {
+  display: block;
 }

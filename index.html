@@ -3,68 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 04 — ES6+ Utility Library</title>
+  <title>Day 05 — Todo List</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <div class="container">
-    <header class="page-header">
-      <h1>Day 04 — ES6+ Utility Library</h1>
-      <p>All functions tested and rendered to the DOM</p>
+  <div class="app">
+
+    <header class="app-header">
+      <h1>My Todos</h1>
+      <span class="counter" id="counter">0 tasks left</span>
     </header>
 
-    <!-- Each section corresponds to one utility function -->
-    <section class="card" id="section-sum">
-      <h2>sum()</h2>
-      <p class="description">Takes an array of numbers, returns the total.</p>
-      <div class="output" id="output-sum"></div>
-    </section>
+    <!-- Input row -->
+    <div class="input-row">
+      <input
+        type="text"
+        id="todo-input"
+        placeholder="What needs to be done?"
+        autocomplete="off"
+      >
+      <button id="add-btn">Add</button>
+    </div>
 
-    <section class="card" id="section-totalPrice">
-      <h2>totalPrice()</h2>
-      <p class="description">Takes an array of items with a price property, returns total cost.</p>
-      <div class="output" id="output-totalPrice"></div>
-    </section>
+    <!-- Filter buttons -->
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="active">Active</button>
+      <button class="filter-btn" data-filter="completed">Completed</button>
+    </div>
 
-    <section class="card" id="section-groupBy">
-      <h2>groupBy()</h2>
-      <p class="description">Groups an array of objects by a given key.</p>
-      <div class="output" id="output-groupBy"></div>
-    </section>
+    <!-- Todo list — items are injected here by JS -->
+    <ul class="todo-list" id="todo-list"></ul>
 
-    <section class="card" id="section-toTitleCase">
-      <h2>toTitleCase()</h2>
-      <p class="description">Converts a string to Title Case.</p>
-      <div class="output" id="output-toTitleCase"></div>
-    </section>
-
-    <section class="card" id="section-unique">
-      <h2>unique()</h2>
-      <p class="description">Removes duplicate values from an array.</p>
-      <div class="output" id="output-unique"></div>
-    </section>
-
-    <section class="card" id="section-pick">
-      <h2>pick()</h2>
-      <p class="description">Returns a new object with only the specified keys.</p>
-      <div class="output" id="output-pick"></div>
-    </section>
-
-    <section class="card" id="section-progress">
-      <h2>progressPercent()</h2>
-      <p class="description">Returns a percentage string from a value and max.</p>
-      <div class="output" id="output-progress"></div>
-    </section>
-
-    <section class="card" id="section-nested">
-      <h2>getNestedValue()</h2>
-      <p class="description">Safely gets a nested value using a dot-string path.</p>
-      <div class="output" id="output-nested"></div>
-    </section>
+    <!-- Empty state — shown when list is empty -->
+    <div class="empty-state" id="empty-state">
+      <p>No todos here. Add one above!</p>
+    </div>
 
   </div>
 
+  <!-- JS always at the bottom of body -->
   <script src="script.js"></script>
 </body>
 </html>
