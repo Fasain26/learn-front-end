@@ -6,17 +6,16 @@
 }
 
 :root {
-  --primary:     #1a1a2e;
-  --accent:      #4f8ef7;
-  --danger:      #ef4444;
-  --success:     #22c55e;
-  --bg:          #f0f2f5;
-  --surface:     #ffffff;
-  --text:        #1a1a2e;
-  --muted:       #9ca3af;
-  --border:      #e5e7eb;
-  --radius:      10px;
-  --shadow:      0 4px 20px rgba(0, 0, 0, 0.08);
+  --primary:   #1a1a2e;
+  --accent:    #4f8ef7;
+  --danger:    #ef4444;
+  --bg:        #f0f2f5;
+  --surface:   #ffffff;
+  --text:      #1a1a2e;
+  --muted:     #9ca3af;
+  --border:    #e5e7eb;
+  --radius:    12px;
+  --shadow:    0 4px 24px rgba(0, 0, 0, 0.08);
 }
 
 body {
@@ -32,219 +31,321 @@ body {
 
 /* ── APP WRAPPER ── */
 .app {
-  background: var(--surface);
-  border-radius: 16px;
-  box-shadow: var(--shadow);
   width: 100%;
   max-width: 520px;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 /* ── HEADER ── */
 .app-header {
-  background: var(--primary);
-  padding: 28px 28px 24px;
+  text-align: center;
+}
+
+.app-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.app-header p {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* ── SEARCH ROW ── */
+.search-row {
+  display: flex;
+  gap: 10px;
+}
+
+.search-row input {
+  flex: 1;
+  padding: 13px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+  background: var(--surface);
+}
+
+.search-row input:focus {
+  border-color: var(--accent);
+}
+
+.search-row button {
+  padding: 13px 24px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: inherit;
+}
+
+.search-row button:hover {
+  background: #3a7de6;
+}
+
+/* ── QUICK CITIES ── */
+.quick-cities {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.city-btn {
+  padding: 7px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+.city-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #eff6ff;
+}
+
+/* ── LOADING STATE ── */
+.loading {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 48px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading p {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* ── ERROR STATE ── */
+.error-card {
+  background: #fef2f2;
+  border: 1.5px solid #fecaca;
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.error-card .error-icon {
+  font-size: 32px;
+}
+
+.error-card h3 {
+  font-size: 16px;
+  color: var(--danger);
+}
+
+.error-card p {
+  font-size: 13px;
+  color: #b91c1c;
+}
+
+.error-card button {
+  padding: 8px 20px;
+  background: var(--danger);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* ── WEATHER CARD ── */
+.weather-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.weather-hero {
+  background: linear-gradient(135deg, var(--primary), #2d2d5e);
+  padding: 32px 28px;
+  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.app-header h1 {
-  color: white;
-  font-size: 22px;
+.weather-hero .location h2 {
+  font-size: 26px;
   font-weight: 700;
 }
 
-.counter {
+.weather-hero .location p {
   font-size: 13px;
   color: #aaa;
-  background: rgba(255,255,255,0.08);
-  padding: 4px 12px;
-  border-radius: 20px;
+  margin-top: 4px;
 }
 
-/* ── INPUT ROW ── */
-.input-row {
-  display: flex;
-  gap: 10px;
-  padding: 20px 24px;
-  border-bottom: 1px solid var(--border);
+.weather-hero .temp-block {
+  text-align: right;
 }
 
-.input-row input {
-  flex: 1;
-  padding: 11px 16px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  font-size: 14px;
-  font-family: inherit;
-  outline: none;
-  transition: border-color 0.2s;
+.weather-hero .temperature {
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1;
 }
 
-.input-row input:focus {
-  border-color: var(--accent);
-}
-
-.input-row button {
-  padding: 11px 22px;
-  background: var(--accent);
-  color: white;
-  border: none;
-  border-radius: var(--radius);
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.2s;
-}
-
-.input-row button:hover {
-  background: #3a7de6;
-}
-
-/* ── FILTERS ── */
-.filters {
-  display: flex;
-  gap: 6px;
-  padding: 14px 24px;
-  border-bottom: 1px solid var(--border);
-}
-
-.filter-btn {
-  padding: 6px 16px;
-  border: 1.5px solid var(--border);
-  border-radius: 20px;
-  background: transparent;
+.weather-hero .feels-like {
   font-size: 13px;
-  color: var(--muted);
-  cursor: pointer;
-  transition: all 0.15s;
-  font-family: inherit;
+  color: #aaa;
+  margin-top: 6px;
 }
 
-.filter-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-/* Active filter — JS adds/removes this class */
-.filter-btn.active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: white;
-}
-
-/* ── TODO LIST ── */
-.todo-list {
-  list-style: none;
-  padding: 8px 0;
-  min-height: 60px;
-}
-
-/* Each todo item */
-.todo-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 24px;
-  border-bottom: 1px solid var(--border);
-  transition: background 0.15s;
-}
-
-.todo-item:last-child {
-  border-bottom: none;
-}
-
-.todo-item:hover {
-  background: #fafafa;
-}
-
-/* Complete button — the circle checkbox */
-.complete-btn {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  border: 2px solid var(--border);
-  background: transparent;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: all 0.15s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  color: white;
-}
-
-.complete-btn:hover {
-  border-color: var(--success);
-}
-
-/* When todo is completed — JS adds .completed to the <li> */
-.todo-item.completed .complete-btn {
-  background: var(--success);
-  border-color: var(--success);
-}
-
-.todo-item.completed .complete-btn::after {
-  content: "✓";
-}
-
-/* Todo text */
-.todo-text {
-  flex: 1;
-  font-size: 14px;
-  color: var(--text);
-  line-height: 1.5;
-  transition: all 0.15s;
-}
-
-.todo-item.completed .todo-text {
-  text-decoration: line-through;
-  color: var(--muted);
-}
-
-/* Delete button */
-.delete-btn {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  border: none;
-  background: transparent;
-  color: var(--muted);
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;                /* hidden by default */
-  transition: all 0.15s;
-}
-
-/* Show delete button on row hover */
-.todo-item:hover .delete-btn {
-  opacity: 1;
-}
-
-.delete-btn:hover {
-  background: #fef2f2;
-  color: var(--danger);
-}
-
-/* ── EMPTY STATE ── */
-.empty-state {
-  padding: 40px 24px;
+.weather-hero .condition-icon {
+  font-size: 48px;
   text-align: center;
-  display: none;           /* hidden by default — JS shows it when list is empty */
+  margin-top: 16px;
 }
 
-.empty-state p {
+/* Stats grid */
+.weather-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--border);
+}
+
+.stat {
+  background: var(--surface);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat .stat-label {
+  font-size: 12px;
   color: var(--muted);
-  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-/* JS adds this class to show it */
-.empty-state.visible {
-  display: block;
+.stat .stat-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.stat .stat-unit {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Forecast row */
+.forecast {
+  padding: 20px 24px;
+  border-top: 1px solid var(--border);
+}
+
+.forecast h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+
+.forecast-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.forecast-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.forecast-day .day-name {
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.forecast-day .day-icon {
+  font-size: 20px;
+}
+
+.forecast-day .day-max {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.forecast-day .day-min {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* Last updated */
+.last-updated {
+  padding: 12px 24px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--muted);
+  text-align: right;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 480px) {
+  .weather-hero {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+
+  .weather-hero .temp-block {
+    text-align: center;
+  }
+
+  .forecast-days {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .forecast-days .forecast-day:nth-child(n+5) {
+    display: none;
+  }
 }

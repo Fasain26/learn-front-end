@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 05 — Todo List</title>
+  <title>Day 06 — Weather App</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,39 +11,35 @@
   <div class="app">
 
     <header class="app-header">
-      <h1>My Todos</h1>
-      <span class="counter" id="counter">0 tasks left</span>
+      <h1>Weather App</h1>
+      <p>Real data from Open-Meteo API</p>
     </header>
 
-    <!-- Input row -->
-    <div class="input-row">
+    <!-- Search bar -->
+    <div class="search-row">
       <input
         type="text"
-        id="todo-input"
-        placeholder="What needs to be done?"
+        id="city-input"
+        placeholder="Enter a city name..."
         autocomplete="off"
       >
-      <button id="add-btn">Add</button>
+      <button id="search-btn">Search</button>
     </div>
 
-    <!-- Filter buttons -->
-    <div class="filters">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="active">Active</button>
-      <button class="filter-btn" data-filter="completed">Completed</button>
+    <!-- Quick city buttons -->
+    <div class="quick-cities">
+      <button class="city-btn" data-city="Jakarta">Jakarta</button>
+      <button class="city-btn" data-city="Tokyo">Tokyo</button>
+      <button class="city-btn" data-city="London">London</button>
+      <button class="city-btn" data-city="New York">New York</button>
+      <button class="city-btn" data-city="Sydney">Sydney</button>
     </div>
 
-    <!-- Todo list — items are injected here by JS -->
-    <ul class="todo-list" id="todo-list"></ul>
-
-    <!-- Empty state — shown when list is empty -->
-    <div class="empty-state" id="empty-state">
-      <p>No todos here. Add one above!</p>
-    </div>
+    <!-- Dynamic content area — loading / error / weather card -->
+    <div id="content"></div>
 
   </div>
 
-  <!-- JS always at the bottom of body -->
   <script src="script.js"></script>
 </body>
 </html>
