@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="layout">
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="sidebar">
+
+      <div class="sidebar-header">
+        <h1>Notes</h1>
+        <button id="new-note-btn" aria-label="New note">+</button>
+      </div>
+
+      <div class="search-wrap">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search notes..."
+          autocomplete="off"
+        >
+      </div>
+
+      <div class="notes-count" id="notes-count">0 notes</div>
+
+      <ul class="note-list" id="note-list"></ul>
+
+    </aside>
+
+    <!-- ── EDITOR ── -->
+    <main class="editor" id="editor">
+
+      <div class="empty-editor" id="empty-editor">
+        <span class="empty-icon">📝</span>
+        <p>Select a note or create a new one</p>
+      </div>
+
+      <div class="note-editor" id="note-editor" style="display:none">
+
+        <div class="editor-toolbar">
+          <span class="note-date" id="note-date"></span>
+          <button class="delete-note-btn" id="delete-note-btn">Delete note</button>
+        </div>
+
+        <input
+          type="text"
+          class="title-input"
+          id="title-input"
+          placeholder="Note title..."
+        >
+
+        <textarea
+          class="body-input"
+          id="body-input"
+          placeholder="Start writing..."
+        ></textarea>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

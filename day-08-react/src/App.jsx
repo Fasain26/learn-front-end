@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Navbar from "./components/Navbar";
 import JobList from "./components/JobList";
 
@@ -70,23 +71,124 @@ const JOBS = [
   },
 ];
 
+const FILTERS = ["All", "Full-time", "Contract"];
+
 const App = () => {
+  const [search, setSearch]       = useState("");
+  const [activeFilter, setFilter] = useState("All");
+  const [sortBy, setSortBy]       = useState("default");
+
+  const filteredJobs = JOBS
+    .filter(job => {
+      const q = search.toLowerCase();
+      const matchesSearch =
+        job.title.toLowerCase().includes(q)   ||
+        job.company.toLowerCase().includes(q) ||
+        job.tags.some(tag => tag.toLowerCase().includes(q));
+
+      const matchesFilter =
+        activeFilter === "All" || job.type === activeFilter;
+
+      return matchesSearch && matchesFilter;
+    })
+    .sort((a, b) => {
+      if (sortBy === "company") return a.company.localeCompare(b.company);
+      return 0;
+    });
+
   return (
     <div>
       <Navbar />
 
       <main style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 24px" }}>
 
+        {/* ── HERO ── */}
         <div style={{ marginBottom: 32 }}>
           <h2 style={{ fontSize: 26, fontWeight: 700, marginBottom: 6 }}>
             Find your next role
           </h2>
           <p style={{ color: "var(--muted)", fontSize: 15 }}>
-            {JOBS.length} jobs available right now
+            {filteredJobs.length} of {JOBS.length} jobs
           </p>
         </div>
 
-        <JobList jobs={JOBS} />
+        {/* ── CONTROLS ── */}
+        <div style={{
+          display:        "flex",
+          gap:            12,
+          marginBottom:   28,
+          flexWrap:       "wrap",
+          alignItems:     "center",
+        }}>
+
+          {/* Search */}
+          <input
+            type="text"
+            placeholder="Search jobs, companies, skills..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            style={{
+              flex:         1,
+              minWidth:     220,
+              padding:      "10px 16px",
+              border:       "1.5px solid var(--border)",
+              borderRadius: "var(--radius)",
+              fontSize:     14,
+              fontFamily:   "inherit",
+              outline:      "none",
+              background:   "var(--surface)",
+            }}
+          />
+
+          {/* Filter buttons */}
+          <div style={{ display: "flex", gap: 8 }}>
+            {FILTERS.map(filter => (
+              <button
+                key={filter}
+                onClick={() => setFilter(filter)}
+                style={{
+                  padding:      "9px 18px",
+                  borderRadius: 20,
+                  border:       "1.5px solid",
+                  borderColor:  activeFilter === filter ? "var(--accent)" : "var(--border)",
+                  background:   activeFilter === filter ? "var(--accent)" : "var(--surface)",
+                  color:        activeFilter === filter ? "white" : "var(--muted)",
+                  fontSize:     13,
+                  fontWeight:   500,
+                  cursor:       "pointer",
+                  fontFamily:   "inherit",
+                  transition:   "all 0.15s",
+                }}
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
+
+          {/* Sort dropdown */}
+          <select
+            value={sortBy}
+            onChange={e => setSortBy(e.target.value)}
+            style={{
+              padding:      "9px 14px",
+              border:       "1.5px solid var(--border)",
+              borderRadius: "var(--radius)",
+              fontSize:     13,
+              fontFamily:   "inherit",
+              outline:      "none",
+              background:   "var(--surface)",
+              cursor:       "pointer",
+              color:        "var(--text)",
+            }}
+          >
+            <option value="default">Sort: Default</option>
+            <option value="company">Sort: Company A–Z</option>
+          </select>
+
+        </div>
+
+        {/* ── JOB LIST ── */}
+        <JobList jobs={filteredJobs} />
 
       </main>
     </div>
