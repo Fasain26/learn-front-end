@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-const Navbar = ({ savedCount }) => {
+const Navbar = ({ savedCount, darkMode, onToggleDark }) => {
   const location = useLocation();
 
   const linkClass = (path) =>
@@ -11,16 +11,15 @@ const Navbar = ({ savedCount }) => {
     }`;
 
   return (
-    <nav className="sticky top-0 z-50 flex items-center justify-between px-8 py-4 bg-[#1a1a2e]">
-      <Link to="/" className="text-white text-xl font-bold no-underline">
-        DevJobs
+    <nav className="sticky top-0 z-50 flex items-center justify-between px-8 py-4 bg-[#1a1a2e] border-b border-white/5">
+
+      <Link to="/" className="text-white text-xl font-bold no-underline tracking-tight">
+        Dev<span className="text-blue-400">Jobs</span>
       </Link>
 
       <ul className="flex items-center gap-7 list-none">
         <li>
-          <Link to="/" className={linkClass("/")}>
-            Jobs
-          </Link>
+          <Link to="/" className={linkClass("/")}>Jobs</Link>
         </li>
         <li className="relative">
           <Link to="/saved" className={linkClass("/saved")}>
@@ -32,7 +31,19 @@ const Navbar = ({ savedCount }) => {
             )}
           </Link>
         </li>
+
+        {/* Dark mode toggle */}
+        <li>
+          <button
+            onClick={onToggleDark}
+            className="w-8 h-8 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm flex items-center justify-center transition-colors cursor-pointer border-none"
+            aria-label="Toggle dark mode"
+          >
+            {darkMode ? "☀️" : "🌙"}
+          </button>
+        </li>
       </ul>
+
     </nav>
   );
 };

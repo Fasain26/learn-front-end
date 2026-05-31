@@ -21,6 +21,9 @@ const App = () => {
   const [savedIds, setSavedIds]   = useState(
     () => JSON.parse(localStorage.getItem("savedIds")) || []
   );
+  const [darkMode, setDarkMode]   = useState(
+    () => localStorage.getItem("darkMode") === "true"
+  );
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -31,15 +34,15 @@ const App = () => {
         if (!response.ok) throw new Error(`API error: ${response.status}`);
         const data = await response.json();
         const normalized = data.jobs.map(job => ({
-          id:       job.id,
-          title:    job.title,
-          company:  job.company_name,
-          location: job.candidate_required_location || "Remote",
-          type:     normalizeJobType(job.job_type),
-          tags:     job.tags?.slice(0, 4) ?? [],
-          logo:     job.company_logo,
-          url:      job.url,
-          date:     job.publication_date,
+          id:          job.id,
+          title:       job.title,
+          company:     job.company_name,
+          location:    job.candidate_required_location || "Remote",
+          type:        normalizeJobType(job.job_type),
+          tags:        job.tags?.slice(0, 4) ?? [],
+          logo:        job.company_logo,
+          url:         job.url,
+          date:        job.publication_date,
           description: job.description,
         }));
         setJobs(normalized);
@@ -56,6 +59,15 @@ const App = () => {
     localStorage.setItem("savedIds", JSON.stringify(savedIds));
   }, [savedIds]);
 
+  useEffect(() => {
+    localStorage.setItem("darkMode", darkMode);
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
+
   const toggleSave = (id) => {
     setSavedIds(prev =>
       prev.includes(id)
@@ -67,9 +79,12 @@ const App = () => {
   const savedJobs = jobs.filter(job => savedIds.includes(job.id));
 
   return (
-    <div>
-      <Navbar savedCount={savedJobs.length} />
-
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-950 transition-colors duration-200">
+      <Navbar
+        savedCount={savedJobs.length}
+        darkMode={darkMode}
+        onToggleDark={() => setDarkMode(prev => !prev)}
+      />
       <Routes>
         <Route
           path="/"
