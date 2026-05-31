@@ -3,52 +3,30 @@ import { Link, useLocation } from "react-router-dom";
 const Navbar = ({ savedCount }) => {
   const location = useLocation();
 
-  const linkStyle = (path) => ({
-    color:          location.pathname === path ? "white" : "#999",
-    textDecoration: "none",
-    fontSize:       14,
-    fontWeight:     location.pathname === path ? 600 : 400,
-    transition:     "color 0.15s",
-  });
+  const linkClass = (path) =>
+    `text-sm transition-colors duration-150 ${
+      location.pathname === path
+        ? "text-white font-semibold"
+        : "text-gray-400 hover:text-white"
+    }`;
 
   return (
-    <nav style={{
-      display:        "flex",
-      justifyContent: "space-between",
-      alignItems:     "center",
-      padding:        "16px 32px",
-      background:     "var(--primary)",
-      position:       "sticky",
-      top:            0,
-      zIndex:         100,
-    }}>
-      <Link to="/" style={{ color: "white", fontSize: 20, fontWeight: 700, textDecoration: "none" }}>
+    <nav className="sticky top-0 z-50 flex items-center justify-between px-8 py-4 bg-[#1a1a2e]">
+      <Link to="/" className="text-white text-xl font-bold no-underline">
         DevJobs
       </Link>
 
-      <ul style={{ display: "flex", gap: 28, listStyle: "none", alignItems: "center" }}>
+      <ul className="flex items-center gap-7 list-none">
         <li>
-          <Link to="/" style={linkStyle("/")}>Jobs</Link>
+          <Link to="/" className={linkClass("/")}>
+            Jobs
+          </Link>
         </li>
-        <li style={{ position: "relative" }}>
-          <Link to="/saved" style={linkStyle("/saved")}>
+        <li className="relative">
+          <Link to="/saved" className={linkClass("/saved")}>
             Saved
             {savedCount > 0 && (
-              <span style={{
-                position:     "absolute",
-                top:          -8,
-                right:        -12,
-                background:   "var(--accent)",
-                color:        "white",
-                fontSize:     10,
-                fontWeight:   700,
-                width:        18,
-                height:       18,
-                borderRadius: "50%",
-                display:      "flex",
-                alignItems:   "center",
-                justifyContent: "center",
-              }}>
+              <span className="absolute -top-2 -right-3 bg-blue-500 text-white text-[10px] font-bold w-[18px] h-[18px] rounded-full flex items-center justify-center">
                 {savedCount}
               </span>
             )}

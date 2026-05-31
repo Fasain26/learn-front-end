@@ -25,66 +25,61 @@ const HomePage = ({ jobs, isLoading, error, savedIds, onToggleSave }) => {
     });
 
   return (
-    <main style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 24px" }}>
+    <main className="max-w-[1100px] mx-auto px-6 py-8">
 
-      <div style={{ marginBottom: 32 }}>
-        <h2 style={{ fontSize: 26, fontWeight: 700, marginBottom: 6 }}>
+      {/* Hero */}
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-1">
           Find your next role
         </h2>
-        <p style={{ color: "var(--muted)", fontSize: 15 }}>
-          {isLoading ? "Loading jobs..." : `${filteredJobs.length} of ${jobs.length} jobs`}
+        <p className="text-gray-400 text-sm">
+          {isLoading
+            ? "Loading jobs..."
+            : `${filteredJobs.length} of ${jobs.length} jobs`
+          }
         </p>
       </div>
 
       {/* Controls */}
-      <div style={{ display: "flex", gap: 12, marginBottom: 28, flexWrap: "wrap", alignItems: "center" }}>
+      <div className="flex gap-3 mb-7 flex-wrap items-center">
+
+        {/* Search */}
         <input
           type="text"
           placeholder="Search jobs, companies, skills..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          style={{
-            flex: 1, minWidth: 220, padding: "10px 16px",
-            border: "1.5px solid var(--border)", borderRadius: "var(--radius)",
-            fontSize: 14, fontFamily: "inherit", outline: "none",
-            background: "var(--surface)",
-          }}
+          className="flex-1 min-w-[220px] px-4 py-2.5 border border-gray-200 rounded-xl text-sm bg-white outline-none focus:border-blue-400 transition-colors"
         />
 
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        {/* Filter buttons */}
+        <div className="flex gap-2 flex-wrap">
           {FILTERS.map(filter => (
             <button
               key={filter}
               onClick={() => setFilter(filter)}
-              style={{
-                padding: "9px 18px", borderRadius: 20,
-                border: "1.5px solid",
-                borderColor:  activeFilter === filter ? "var(--accent)" : "var(--border)",
-                background:   activeFilter === filter ? "var(--accent)" : "var(--surface)",
-                color:        activeFilter === filter ? "white" : "var(--muted)",
-                fontSize: 13, fontWeight: 500, cursor: "pointer",
-                fontFamily: "inherit", transition: "all 0.15s",
-              }}
+              className={`px-4 py-2 rounded-full text-[13px] font-medium border transition-all duration-150 cursor-pointer
+                ${activeFilter === filter
+                  ? "bg-blue-500 border-blue-500 text-white"
+                  : "bg-white border-gray-200 text-gray-400 hover:border-blue-300 hover:text-blue-400"
+                }`}
             >
               {filter}
             </button>
           ))}
         </div>
 
+        {/* Sort */}
         <select
           value={sortBy}
           onChange={e => setSortBy(e.target.value)}
-          style={{
-            padding: "9px 14px", border: "1.5px solid var(--border)",
-            borderRadius: "var(--radius)", fontSize: 13,
-            fontFamily: "inherit", outline: "none",
-            background: "var(--surface)", cursor: "pointer", color: "var(--text)",
-          }}
+          className="px-3 py-2.5 border border-gray-200 rounded-xl text-[13px] bg-white outline-none cursor-pointer text-gray-600"
         >
           <option value="default">Sort: Default</option>
           <option value="company">Sort: Company A–Z</option>
           <option value="newest">Sort: Newest first</option>
         </select>
+
       </div>
 
       <JobList

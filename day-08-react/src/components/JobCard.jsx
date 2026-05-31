@@ -1,89 +1,56 @@
 import { Link } from "react-router-dom";
 
+const TYPE_STYLES = {
+  "Full-time": "bg-blue-50 text-blue-500",
+  "Contract":  "bg-green-50 text-green-600",
+  "Part-time": "bg-purple-50 text-purple-600",
+};
+
+const formatDate = (dateStr) =>
+  new Date(dateStr).toLocaleDateString("en", {
+    month: "short", day: "numeric", year: "numeric",
+  });
+
 const JobCard = ({ job, isSaved, onToggleSave }) => {
-  const formatDate = (dateStr) =>
-    new Date(dateStr).toLocaleDateString("en", {
-      month: "short",
-      day:   "numeric",
-      year:  "numeric",
-    });
-
-  const typeColors = {
-    "Full-time": { bg: "#eff6ff", color: "#4f8ef7" },
-    "Contract":  { bg: "#f0fdf4", color: "#16a34a" },
-    "Part-time": { bg: "#fdf4ff", color: "#9333ea" },
-  };
-
-  const badge = typeColors[job.type] ?? typeColors["Full-time"];
+  const badgeClass = TYPE_STYLES[job.type] ?? TYPE_STYLES["Full-time"];
 
   return (
-    <div style={{
-      background:    "var(--surface)",
-      borderRadius:  "var(--radius)",
-      boxShadow:     "var(--shadow)",
-      border:        "1px solid var(--border)",
-      display:       "flex",
-      flexDirection: "column",
-      overflow:      "hidden",
-      transition:    "transform 0.15s, box-shadow 0.15s",
-    }}
-      onMouseEnter={e => {
-        e.currentTarget.style.transform = "translateY(-2px)";
-        e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.12)";
-      }}
-      onMouseLeave={e => {
-        e.currentTarget.style.transform = "translateY(0)";
-        e.currentTarget.style.boxShadow = "var(--shadow)";
-      }}
-    >
-      {/* Clickable area → job detail page */}
+    <div className="bg-white rounded-xl border border-gray-100 shadow-sm flex flex-col overflow-hidden transition-all duration-150 hover:-translate-y-0.5 hover:shadow-md">
+
+      {/* Clickable body */}
       <Link
         to={`/jobs/${job.id}`}
-        style={{ textDecoration: "none", color: "inherit", padding: 24, flex: 1, display: "flex", flexDirection: "column", gap: 12 }}
+        className="flex flex-col gap-3 p-6 flex-1 no-underline text-inherit"
       >
-        {/* Top row */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-          <div style={{
-            width: 48, height: 48, borderRadius: 10,
-            overflow: "hidden", background: "#f5f5f5",
-            flexShrink: 0, display: "flex",
-            alignItems: "center", justifyContent: "center",
-          }}>
+        {/* Top row — logo + badge */}
+        <div className="flex justify-between items-start">
+          <div className="w-12 h-12 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0 flex items-center justify-center">
             {job.logo
-              ? <img src={job.logo} alt={job.company} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
-              : <span style={{ fontSize: 22 }}>🏢</span>
+              ? <img src={job.logo} alt={job.company} className="w-full h-full object-contain" />
+              : <span className="text-2xl">🏢</span>
             }
           </div>
-          <span style={{
-            fontSize: 11, padding: "4px 10px",
-            borderRadius: 20, background: badge.bg,
-            color: badge.color, fontWeight: 500,
-          }}>
+          <span className={`text-[11px] font-medium px-3 py-1 rounded-full ${badgeClass}`}>
             {job.type}
           </span>
         </div>
 
         {/* Title + company */}
         <div>
-          <h3 style={{
-            fontSize: 15, fontWeight: 600, marginBottom: 4,
-            display: "-webkit-box", WebkitLineClamp: 2,
-            WebkitBoxOrient: "vertical", overflow: "hidden",
-          }}>
+          <h3 className="text-[15px] font-semibold mb-1 line-clamp-2 text-gray-900">
             {job.title}
           </h3>
-          <p style={{ fontSize: 13, color: "var(--muted)" }}>{job.company}</p>
+          <p className="text-[13px] text-gray-400">{job.company}</p>
         </div>
 
         {/* Tags */}
         {job.tags.length > 0 && (
-          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+          <div className="flex gap-1.5 flex-wrap">
             {job.tags.map(tag => (
-              <span key={tag} style={{
-                fontSize: 11, padding: "3px 10px",
-                borderRadius: 20, background: "var(--bg)",
-                color: "var(--muted)", border: "1px solid var(--border)",
-              }}>
+              <span
+                key={tag}
+                className="text-[11px] px-2.5 py-0.5 rounded-full bg-gray-50 text-gray-400 border border-gray-100"
+              >
                 {tag}
               </span>
             ))}
@@ -91,34 +58,24 @@ const JobCard = ({ job, isSaved, onToggleSave }) => {
         )}
 
         {/* Bottom row */}
-        <div style={{
-          display: "flex", justifyContent: "space-between",
-          alignItems: "center", marginTop: "auto",
-          paddingTop: 12, borderTop: "1px solid var(--border)",
-        }}>
-          <span style={{ fontSize: 13, color: "var(--muted)" }}>📍 {job.location}</span>
-          <span style={{ fontSize: 12, color: "var(--muted)" }}>{formatDate(job.date)}</span>
+        <div className="flex justify-between items-center mt-auto pt-3 border-t border-gray-100">
+          <span className="text-[13px] text-gray-400">📍 {job.location}</span>
+          <span className="text-[12px] text-gray-300">{formatDate(job.date)}</span>
         </div>
       </Link>
 
-      {/* Save button — outside the Link so it doesn't navigate */}
+      {/* Save button */}
       <button
         onClick={() => onToggleSave(job.id)}
-        style={{
-          padding:        "10px",
-          border:         "none",
-          borderTop:      "1px solid var(--border)",
-          background:     isSaved ? "#eff6ff" : "var(--surface)",
-          color:          isSaved ? "var(--accent)" : "var(--muted)",
-          fontSize:       13,
-          fontWeight:     500,
-          cursor:         "pointer",
-          fontFamily:     "inherit",
-          transition:     "all 0.15s",
-        }}
+        className={`w-full py-2.5 text-[13px] font-medium border-t border-gray-100 transition-all duration-150 cursor-pointer
+          ${isSaved
+            ? "bg-blue-50 text-blue-500"
+            : "bg-white text-gray-400 hover:bg-gray-50"
+          }`}
       >
         {isSaved ? "✓ Saved" : "Save job"}
       </button>
+
     </div>
   );
 };
